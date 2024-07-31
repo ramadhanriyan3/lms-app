@@ -18,6 +18,16 @@ export async function GET(
             createdAt: "desc",
           },
         },
+        chapters: {
+          orderBy: {
+            position: "asc",
+          },
+        },
+        purchase: {
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
       },
     });
     return NextResponse.json(courseById);

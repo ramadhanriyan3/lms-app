@@ -16,6 +16,7 @@ import ImageForm from "@/components/form/imageForm";
 import CategoryForm from "@/components/form/categoryForm";
 import PriceForm from "@/components/form/priceForm";
 import AttachmentForm from "@/components/form/attachmentForm";
+import ChaptersForm from "@/components/form/chapterForm";
 
 const CourseId = ({ params }: { params: { courseId: string } }) => {
   const { data, isLoading } = useSWR(
@@ -35,6 +36,7 @@ const CourseId = ({ params }: { params: { courseId: string } }) => {
     data.imageUrl,
     data.price,
     data.categoryId,
+    data.chapters.some((chapter: { isPublished: any }) => chapter.isPublished),
   ];
 
   console.log({ LILHAT: data });
@@ -77,7 +79,9 @@ const CourseId = ({ params }: { params: { courseId: string } }) => {
                 <IconBadge icon={ListCheck} />
                 <h2 className="text-xl">Course chapters</h2>
               </div>
-              <div>TODO: Chapters</div>
+              <div>
+                <ChaptersForm initialData={data} courseId={data.id} />
+              </div>
             </div>
             <div>
               <div className="flex items-center gap-x-2">
@@ -86,13 +90,13 @@ const CourseId = ({ params }: { params: { courseId: string } }) => {
               </div>
               <PriceForm initialData={data} courseId={data.id} />
             </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-x-2">
-              <IconBadge icon={File} />
-              <h2 className="text-xl">Resources & Attachments</h2>
+            <div>
+              <div className="flex items-center gap-x-2">
+                <IconBadge icon={File} />
+                <h2 className="text-xl">Resources & Attachments</h2>
+              </div>
+              <AttachmentForm initialData={data} courseId={data.id} />
             </div>
-            <AttachmentForm initialData={data} courseId={data.id} />
           </div>
         </div>
       </div>
