@@ -7,6 +7,7 @@ import ClerkWrapper from "@/provider/clerkPorvider";
 import ToasterProvider from "@/provider/toasterProvider";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFIleRouter } from "./api/uploadthing/core";
+import { ConfettiProvider } from "@/provider/confettiProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFIleRouter)} />
         <ClerkWrapper>
+          <ConfettiProvider />
           <ToasterProvider />
           {children}
         </ClerkWrapper>

@@ -6,15 +6,23 @@ import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import { Ghost, LogOut } from "lucide-react";
+import SearchInput from "./searchInput";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const isPlayer = pathname?.startsWith("/chapter");
+  const isPlayer = pathname?.includes("/chapter");
   const isTeacher = pathname?.startsWith("/teacher");
+
+  const isSearchPage = pathname == "/search";
 
   return (
     <nav className="flex h-full items-center justify-between px-3 border-b-2 bg-white drop-shadow-md ">
       <MobileSidebar />
+      {isSearchPage && (
+        <div className="hidden md:block">
+          <SearchInput />
+        </div>
+      )}
       <div className="flex gap-2 ml-auto">
         {isTeacher || isPlayer ? (
           <Link href={"/"}>

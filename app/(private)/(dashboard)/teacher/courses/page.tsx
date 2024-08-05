@@ -1,13 +1,26 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { columns } from "@/components/table/columns";
+import { DataTable } from "@/components/table/dataTable";
+import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
 
-const CoursesPage = () => {
+const CoursesPage = async () => {
+  const { userId } = auth();
+  const course = await db.course.findMany({
+    where: {
+      userId: userId!,
+    },
+    include: {
+      category: true,
+      purchase: true,
+    },
+  });
+
   return (
-    <div>
-      <Link href={"/teacher/create"}>
-        <Button>Create Course</Button>
-      </Link>
-    </div>
+    <>
+      <div className="p-4">
+        <DataTable columns={columns} data={course} />
+      </div>
+    </>
   );
 };
 
