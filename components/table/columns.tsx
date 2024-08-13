@@ -2,10 +2,19 @@
 
 import { Category, Course, Purchases } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "../ui/badge";
+import Link from "next/link";
+import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react";
 
-import { ArrowUpDown } from "lucide-react";
+import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 type CourseWithCategory = Course & {
   category: Category | null;
@@ -25,6 +34,10 @@ export const columns: ColumnDef<CourseWithCategory>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      const { title } = row.original;
+      return <div className="text-left font-medium">{title}</div>;
     },
   },
   {
@@ -124,6 +137,31 @@ export const columns: ColumnDef<CourseWithCategory>[] = [
         <Badge className={isPublished ? "bg-sky-700" : "bg-slate-500"}>
           {isPublished ? "Published" : "Draft"}
         </Badge>
+      );
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const { id } = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant={"ghost"} className="w-8 h-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <Link href={`/teacher/courses/${id}`} className="cursor-pointer">
+              <DropdownMenuItem className="flex justify-between items-center gap-x-2">
+                Edit
+                <Pencil className="w-4 h-4" />
+              </DropdownMenuItem>
+            </Link>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },

@@ -1,23 +1,33 @@
-"use client";
+import { getCourses } from "@/actions/getCourses";
 import CategoriesBread from "@/components/categoriesBreadcrumb";
-import Loading from "@/components/loading";
+import CoursesList from "@/components/courseList";
 import SearchInput from "@/components/searchInput";
-import { fetcher } from "@/lib/fetcher";
-import useSWR from "swr";
+import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
 
-const SearchPage = () => {
-  const { data: categories } = useSWR("/api/category", fetcher);
+interface SearchParams {
+  searchParams: {
+    title: string;
+    categoryId: string;
+  };
+}
 
-  if (!categories) {
-    return <Loading />;
-  }
+const SearchPage = async ({ searchParams }: SearchParams) => {
+  const user = auth();
+  const userId = user.userId!;
+  const categories = await db.category.findMany();
+  const courses = await getCourses({
+    userId,
+    ...searchParams,
+  });
   return (
     <>
       <div className="px-3 pt-3 md:hidden block">
         <SearchInput />
       </div>
-      <div className="p-3">
+      <div className="p-4 space-y-4">
         <CategoriesBread items={categories} />
+        <CoursesList items={courses} />
       </div>
     </>
   );

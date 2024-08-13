@@ -13,6 +13,9 @@ const CoursesPage = async () => {
       category: true,
       purchase: true,
     },
+    orderBy: {
+      updatedAt: "desc",
+    },
   });
 
   return (

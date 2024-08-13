@@ -15,7 +15,7 @@ const TextPreview = ({ value }: TextPreviewProps) => {
   );
 
   return (
-    <div className="bg-slate-100">
+    <div className="bg-transparent">
       <ReactQuill theme="bubble" value={value} readOnly />
     </div>
   );
