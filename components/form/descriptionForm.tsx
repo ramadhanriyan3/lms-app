@@ -35,7 +35,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData.description ? initialData : { description: "" },
+    defaultValues: { description: initialData.description || "" },
   });
 
   const { isSubmitting, isValid } = form.formState;
