@@ -2,6 +2,9 @@ name: Vercel Production Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  MUX_TOKEN_ID: ${{ secrets.MUX_TOKEN_ID }}
+  MUX_TOKEN_SECRET: ${{ secrets.MMUX_TOKEN_SECRET }}
+
 on:
   push:
     branches:
