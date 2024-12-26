@@ -3,7 +3,7 @@ import { BarChart, Compass, Layout, List } from "lucide-react";
 export const guestRoutes = [
   {
     path: "/",
-    label: "My Courses",
+    label: "Dashboard",
     icon: Layout,
   },
   {
